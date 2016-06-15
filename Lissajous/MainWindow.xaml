@@ -7,6 +7,22 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Button Grid.Row="0" x:Name="StopButton" Click="StopButton_Click"/>
+        <local:HorizontalHeadPanel x:Name="HeadX" Grid.Column="0" Grid.Row="2"/>
+        <local:LissajousPanel x:Name="Lissa" Grid.Column="1" Grid.Row="2"/>
+        <local:HorizontalTailPanel x:Name="TailX" Grid.Column="2" Grid.Row="2"/>
+        <local:VerticalHeadPanel x:Name="HeadY" Grid.Column="1" Grid.Row="1" />
+        <local:VerticalTailPanel x:Name="TailY" Grid.Column="1" Grid.Row="3" />
     </Grid>
 </Window>

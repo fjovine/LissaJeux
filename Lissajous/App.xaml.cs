@@ -1,15 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="App.xaml.cs" company="hiLab">
+// Copyright (c) Francesco Iovine.
+// </copyright>
+// <author>Francesco Iovine iovinemeccanica@gmail.com</author>
+// <creation>2016.06.11</creation>
+//-----------------------------------------------------------------------
 namespace Lissajous
 {
+    using System.Windows;
+
     /// <summary>
-    /// Logica di interazione per App.xaml
+    /// Interaction logic for <c>App.xaml</c>
     /// </summary>
     public partial class App : Application
     {

@@ -1,0 +1,26 @@
+﻿//-----------------------------------------------------------------------
+// <copyright file="VerticalTailPanel.cs" company="hiLab">
+// Copyright (c) Francesco Iovine.
+// </copyright>
+// <author>Francesco Iovine iovinemeccanica@gmail.com</author>
+// <creation>2016.06.11</creation>
+//-----------------------------------------------------------------------
+namespace Lissajous
+{
+    using System.Windows.Media;
+
+    /// <summary>
+    /// WPF panel that shows the tail (points after current time) of the horizontal component of the <c>Lissajous</c> curve as a vertically downwards moving sinusoid.
+    /// </summary>
+    public class VerticalTailPanel : SinusPanel
+    {
+        /// <summary>
+        /// Renders the curve
+        /// </summary>
+        /// <param name="dc">Graphics contest to be used.</param>
+        protected override void OnRender(DrawingContext dc)
+        {
+            this.RenderVertical(dc, this.Lissajous.TheGenerator.Tail);
+        }
+    }
+}

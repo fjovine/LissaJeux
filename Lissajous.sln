@@ -5,6 +5,11 @@ VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lissajous", "Lissajous\Lissajous.csproj", "{17D0989C-7912-4FF4-82FF-29F4486FC4FB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LissajousIntegrationTests", "..\LissajousIntegrationTests\LissajousIntegrationTests.csproj", "{0BE50CC4-7F13-41CA-8D8B-889506E6C37A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{17D0989C-7912-4FF4-82FF-29F4486FC4FB} = {17D0989C-7912-4FF4-82FF-29F4486FC4FB}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +20,10 @@ Global
 		{17D0989C-7912-4FF4-82FF-29F4486FC4FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17D0989C-7912-4FF4-82FF-29F4486FC4FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{17D0989C-7912-4FF4-82FF-29F4486FC4FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BE50CC4-7F13-41CA-8D8B-889506E6C37A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BE50CC4-7F13-41CA-8D8B-889506E6C37A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BE50CC4-7F13-41CA-8D8B-889506E6C37A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BE50CC4-7F13-41CA-8D8B-889506E6C37A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
