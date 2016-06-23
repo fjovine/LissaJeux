@@ -8,21 +8,26 @@
         Title="MainWindow" Height="350" Width="525">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <Button Grid.Row="0" x:Name="StopButton" Click="StopButton_Click"/>
-        <local:HorizontalHeadPanel x:Name="HeadX" Grid.Column="0" Grid.Row="2"/>
-        <local:LissajousPanel x:Name="Lissa" Grid.Column="1" Grid.Row="2"/>
-        <local:HorizontalTailPanel x:Name="TailX" Grid.Column="2" Grid.Row="2"/>
-        <local:VerticalHeadPanel x:Name="HeadY" Grid.Column="1" Grid.Row="1" />
-        <local:VerticalTailPanel x:Name="TailY" Grid.Column="1" Grid.Row="3" />
+        <StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal" Margin="2,5,2,2">
+            <local:DisableableButton Content="Start" Grid.Row="0" x:Name="StartStopButton" Click="StopButton_Click" Padding="5,0,5,0"/>
+            <Button Content="Gif" x:Name="ToAnimatedGif" Click="ToAnimatedGif_Click" Padding="5,0,5,0" Margin="5,0,0,0"/>
+            <Label Content="Amplitude ratio"/>
+            <local:NumberBox Width="50" x:Name="AmplitudeRatio" MinValue="0.2" MaxValue="5.0" Value="1.0" Margin="5,5,5,5"/>
+            <Label Content="Frequency ratio" />
+            <local:NumberBox Width="50" x:Name="FrequencyRatio" MinValue="0.1" MaxValue="5.0" Value="1.0" Margin="5,5,5,5"/>
+            <Label Content="Phase [°]" />
+            <local:NumberBox Width="50" x:Name="Phase" MinValue="-180.0" MaxValue="180.0" Value="0" Margin="5,5,5,5"/>
+        </StackPanel>
+        <TabControl Grid.Row="1" x:Name="TabRender">
+            <TabItem Header="Sinus" x:Name="SinusPanel">
+                <local:LissaSet x:Name="LissaSet"/>
+            </TabItem>
+            <TabItem Header="Circle">
+                <local:LissaSetCircle x:Name="LissaSetCircle" />
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>

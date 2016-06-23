@@ -20,7 +20,14 @@ namespace Lissajous
         /// <param name="dc">Graphics contest to be used.</param>
         protected override void OnRender(DrawingContext dc)
         {
-            this.RenderHorizontal(dc, this.Lissajous.TheGenerator.Head);
+            if (this.Lissajous == null)
+            {
+                return;
+            }
+            if (this.Lissajous.TheGenerator != null)
+            {
+                this.RenderHorizontal(dc, this.Lissajous.TheGenerator.Head);
+            }
         }
     }
 }

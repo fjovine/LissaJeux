@@ -22,12 +22,6 @@ namespace Lissajous
         /// </summary>
         public LissajousPanel()
         {
-            // this.TheGenerator = new Generator(1f, 1f, (float)Math.PI/2, 0.02f); // Circle
-            this.TheGenerator = new Generator(4.0f, 1.3f, (float)Math.PI / 2 * 0.14f, 0.02f);
-            this.TheGenerator.NewPoint += (s, e) =>
-            {
-                this.Dispatcher.Invoke(() => { this.InvalidateVisual(); });                
-            };
         }
 
         /// <summary>
@@ -37,33 +31,37 @@ namespace Lissajous
         {
             get
             {
-                double scaleFactorX = this.ActualWidth / this.TheGenerator.AmplitudeX;
-                double scaleFactorY = this.ActualHeight / this.TheGenerator.AmplitudeY;
-                return Math.Min(scaleFactorX, scaleFactorY) / 2;
+                if (this.TheGenerator == null)
+                {
+                    return 1.0;
+                } else
+                {
+                    double scaleFactorX = this.ActualWidth / this.TheGenerator.AmplitudeX;
+                    double scaleFactorY = this.ActualHeight / this.TheGenerator.AmplitudeY;
+                    return Math.Min(scaleFactorX, scaleFactorY) / 2;
+                }
             }
         }
+
+        private Generator theGenerator;
 
         /// <summary>
         /// Gets the generator class that manages the real time generation of the points on the curve.
         /// </summary>
         public Generator TheGenerator
         {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// Stops the animation thread.
-        /// </summary>
-        public void Stop()
-        {
-            if (this.TheGenerator.IsRunning)
+            get
             {
-                this.TheGenerator.Stop();
+                return this.theGenerator;
             }
-            else
+
+            set
             {
-                this.TheGenerator.Start();
+                this.theGenerator = value;
+                this.theGenerator.NewPoint += (s, e) =>
+                {
+                    this.Dispatcher.Invoke(() => { this.InvalidateVisual(); });
+                };
             }
         }
 
@@ -73,31 +71,33 @@ namespace Lissajous
         /// <param name="dc">Graphics context to render on.</param>
         protected override void OnRender(DrawingContext dc)
         {
-            //this.ClipToBounds = true;
             const int MaxPens = 5;
             double semiWidth = this.ActualWidth / 2;
             double semiHeight = this.ActualHeight / 2;
             double scaleFactor = this.ScaleFactor;
 
-            dc.PushTransform(new TranslateTransform(semiWidth, semiHeight));
-            dc.PushTransform(new ScaleTransform(scaleFactor, scaleFactor));
-            var inverse = this.LayoutTransform.Inverse;
+            if (this.TheGenerator == null)
+            {
+                return;
+            }
 
-            Pen thinPen = new Pen(Brushes.DarkGray, 1.0f / scaleFactor);
-            Point pointEast = new Point(-semiWidth, this.TheGenerator.PointNow.Y);
-            Point pointWest = new Point(semiWidth, this.TheGenerator.PointNow.Y);
+            SimpleTransform transform = new SimpleTransform(semiWidth, semiHeight, scaleFactor, scaleFactor);
+            Pen thinPen = new Pen(Brushes.DarkGray, 1.0f );
+            double y = transform.DirectY(this.TheGenerator.PointNow.Y);
+            Point pointEast = new Point(0, y);
+            Point pointWest = new Point(this.ActualWidth, y);
             dc.DrawLine(thinPen, pointEast, pointWest);
 
-            Point pointNorth = new Point(this.TheGenerator.PointNow.X, -semiHeight);
-            Point pointSouth = new Point(this.TheGenerator.PointNow.X, semiHeight);
+            double x = transform.DirectX(this.TheGenerator.PointNow.X);
+            Point pointNorth = new Point(x, 0);
+            Point pointSouth = new Point(x, this.ActualHeight);
             dc.DrawLine(thinPen, pointNorth, pointSouth);
 
             Point last = new Point(0, 0);
             Pen[] pens = new Pen[MaxPens + 1];
             for (int j = 0; j < MaxPens; j++)
             {
-                //pens[j] = new Pen(Brushes.LightGreen, 0.008 + 0.03 * (MaxPens-j));
-                var pen = new Pen(Brushes.LightGreen, 0.04);
+                var pen = new Pen(Brushes.LightGreen, MaxPens - j);
                 pen.StartLineCap = PenLineCap.Round;
                 pen.EndLineCap = PenLineCap.Round;
                 pens[j] = pen;
@@ -112,19 +112,15 @@ namespace Lissajous
                     index = MaxPens;
                 }
 
-                Point p = new Point(point.X, point.Y);
+                Point p = transform.Direct(new Point(point.X, point.Y));
                 if (i > 0)
                 {
                     dc.DrawLine(pens[index], last, p);
-                    //dc.DrawLine(pens[0], last, p);
                 }
 
                 last = p;
                 i++;
             }
-
-            dc.Pop();
-            dc.Pop();
         }
     }
 }

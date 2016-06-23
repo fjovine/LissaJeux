@@ -25,12 +25,12 @@ namespace Lissajous
         /// Number of points stored in the <see cref="head"/> and in the <see cref="tail"/> arrays.
         /// Future and past is symmetrical.
         /// </summary>
-        public const int HeadTailLength = 100;
+        public const int HeadTailLength = 70;
 
         /// <summary>
         /// Reference frequency, i.e. the smallest frequency of the composing signals
         /// </summary>
-        public const float ReferenceFrequency = 0.8f;
+        public const float ReferenceFrequency = 0.6f;
 
         /// <summary>
         /// Reference pulsation, i.e. the smallest pulsation of the composing signals.
@@ -40,7 +40,7 @@ namespace Lissajous
         /// <summary>
         /// Points before the current time, ac
         /// </summary>
-        private LissaPoint[] head = new LissaPoint[HeadTailLength];
+        private LissaPoint[] head = new LissaPoint[HeadTailLength + 1];
 
         /// <summary>
         /// Thread that generates the points, that are regularly made available through the <see cref="Eve"/>
@@ -228,7 +228,7 @@ namespace Lissajous
         }
 
         /// <summary>
-        /// Gets or sets the initial phase
+        /// Gets or sets the initial phase in radians
         /// </summary>
         protected float Phi
         {
@@ -247,13 +247,7 @@ namespace Lissajous
                     while (!stop)
                     {
                         this.IsRunning = true;
-                        this.AddPointNow();
-                        if (this.NewPoint != null)
-                        {
-                            NewPoint(this, new NewPointEventArgs(this.PointNow));
-                        }
-
-                        this.CurrentTime += DeltaT;
+                        this.PerformOneStep();
                         Thread.Sleep((int)(this.DeltaT * 1000));
                     }
 
@@ -261,6 +255,16 @@ namespace Lissajous
                 });
 
             this.runner.Start();
+        }
+
+        public void PerformOneStep()
+        {
+            this.CurrentTime += DeltaT;
+            this.AddPointNow();
+            if (this.NewPoint != null)
+            {
+                NewPoint(this, new NewPointEventArgs(this.PointNow));
+            }
         }
 
         /// <summary>
@@ -287,9 +291,29 @@ namespace Lissajous
         protected LissaPoint PointAt(double time)
         {
             //// System.Diagnostics.Debug.WriteLine("Time :" + time);
-            double x = this.AmplitudeX * Math.Sin((this.OmegaX * time) + this.Phi);
-            double y = this.AmplitudeY * Math.Sin(this.OmegaY * time);
+            double x = this.AmplitudeX * Math.Sin(this.PhaseX(time));
+            double y = this.AmplitudeY * Math.Sin(this.PhaseY(time));
             return new LissaPoint(x, y, time);
+        }
+
+        public double PhaseX(double time)
+        {
+            return this.OmegaX * time + this.Phi;
+        }
+
+        public double PhaseX()
+        {
+            return this.PhaseX(this.CurrentTime);
+        }
+
+        public double PhaseY(double time)
+        {
+            return this.OmegaY * time;
+        }
+
+        public double PhaseY()
+        {
+            return this.PhaseY(this.CurrentTime);
         }
 
         /// <summary>
@@ -299,7 +323,7 @@ namespace Lissajous
         {
             Array.Copy(this.tail, 0, this.tail, 1, HeadTailLength - 1);
             this.tail[0] = this.head[HeadTailLength - 1];
-            Array.Copy(this.head, 0, this.head, 1, HeadTailLength - 1);
+            Array.Copy(this.head, 0, this.head, 1, HeadTailLength);
             this.head[0] = this.PointAt(this.CurrentTime + this.DeltaTimeHeadTail);
         }
     }

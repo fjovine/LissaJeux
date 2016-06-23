@@ -38,6 +38,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -50,16 +51,47 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AnimatedGifEncoder.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
+    <Compile Include="CirclePanel.cs" />
+    <Compile Include="DisableableButton.cs" />
+    <Compile Include="GitAnimator.cs" />
     <Compile Include="HorizontalTailPanel.cs" />
+    <Compile Include="IFallible.cs" />
+    <Compile Include="LissaSetCircle.xaml.cs">
+      <DependentUpon>LissaSetCircle.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LissajousHelperPanel.cs" />
+    <Compile Include="LissaSet.xaml.cs">
+      <DependentUpon>LissaSet.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LZWEncoder.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
+    <Compile Include="NeuQuant.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
+    <Compile Include="NumberBox.cs" />
+    <Compile Include="SimpleTransform.cs" />
     <Compile Include="SinusPanel.cs" />
     <Compile Include="VerticalHeadPanel.cs" />
     <Compile Include="VerticalTailPanel.cs" />
+    <Page Include="LissaSetCircle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LissaSet.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
