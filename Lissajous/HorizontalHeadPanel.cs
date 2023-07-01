@@ -24,6 +24,7 @@ namespace Lissajous
             {
                 return;
             }
+
             if (this.Lissajous.TheGenerator != null)
             {
                 this.RenderHorizontal(dc, this.Lissajous.TheGenerator.Head);

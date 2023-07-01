@@ -8,13 +8,11 @@ namespace Lissajous
 {
     using System.Windows.Controls;
 
+    /// <summary>
+    /// Panel showing a <c>Lissajous</c> curve.
+    /// </summary>
     public class LissajousHelperPanel : Canvas
     {
-        /// <summary>
-        /// Local copy of the panel where the curve is shown.
-        /// </summary>
-        protected LissajousPanel lissajousPanel;
-
         /// <summary>
         /// Gets or sets the panel where the <c>Lissajous</c> curve is being shown.
         /// </summary>
@@ -22,20 +20,29 @@ namespace Lissajous
         {
             get
             {
-                return this.lissajousPanel;
+                return this.LissajousPanel;
             }
 
             set
             {
-                this.lissajousPanel = value;
-                if (this.lissajousPanel.TheGenerator != null)
+                this.LissajousPanel = value;
+                if (this.LissajousPanel.TheGenerator != null)
                 {
-                    this.lissajousPanel.TheGenerator.NewPoint += (s, e) =>
+                    this.LissajousPanel.TheGenerator.NewPoint += (s, e) =>
                     {
                         this.Dispatcher.Invoke(() => this.InvalidateVisual());
                     };
                 }
             }
+        }
+
+        /// <summary>
+        /// Gets or sets the local copy of the panel where the curve is shown.
+        /// </summary>
+        protected LissajousPanel LissajousPanel
+        {
+            get;
+            set;
         }
     }
 }

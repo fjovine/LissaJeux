@@ -8,17 +8,26 @@ namespace Lissajous
 {
     using System;
     using System.Windows;
-    using System.Windows.Controls;
     using System.Windows.Media;
 
+    /// <summary>
+    /// Widget showing a circle with a rotating radius and horizontal or vertical projection lines.
+    /// </summary>
     public class CirclePanel : LissajousHelperPanel
     {
+        /// <summary>
+        /// Gets or sets a value indicating whether the circle has horizontal projection lines.
+        /// </summary>
         public bool IsHorizontal
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// Renders the current state of the circle.
+        /// </summary>
+        /// <param name="dc">Graphic context where to render.</param>
         protected override void OnRender(DrawingContext dc)
         {
             if (this.Lissajous == null)
@@ -37,13 +46,13 @@ namespace Lissajous
                 thinPen.EndLineCap = PenLineCap.Round;
                 SimpleTransform transform = new SimpleTransform(semiWidth, semiHeight, this.Lissajous.ScaleFactor, this.Lissajous.ScaleFactor);
                 var center = transform.Direct(new Point(0, 0));
-                var phase = IsHorizontal ? 
-                    this.lissajousPanel.TheGenerator.PhaseY() :
-                    this.lissajousPanel.TheGenerator.PhaseX() - Math.PI/2;
+                var phase = this.IsHorizontal ?
+                    this.LissajousPanel.TheGenerator.PhaseY() :
+                    this.LissajousPanel.TheGenerator.PhaseX() - (Math.PI / 2);
 
                 var amplitude = this.IsHorizontal ?
-                    this.lissajousPanel.TheGenerator.AmplitudeY :
-                    this.lissajousPanel.TheGenerator.AmplitudeX;
+                    this.LissajousPanel.TheGenerator.AmplitudeY :
+                    this.LissajousPanel.TheGenerator.AmplitudeX;
 
                 var periphery = transform.Direct(
                     new Point(
@@ -65,12 +74,18 @@ namespace Lissajous
             }
         }
 
-        private double Distance(Point a,Point b)
+        /// <summary>
+        /// Measures the distance between the passed point.
+        /// </summary>
+        /// <param name="a">First point.</param>
+        /// <param name="b">Second point.</param>
+        /// <returns>The distance between the point.</returns>
+        private double Distance(Point a, Point b)
         {
             double dX = a.X - b.X;
             double dY = a.Y - b.Y;
 
-            return Math.Sqrt(dX * dX + dY * dY);
+            return Math.Sqrt((dX * dX) + (dY * dY));
         }
     }
 }

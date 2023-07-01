@@ -18,6 +18,11 @@ namespace Lissajous
     public class LissajousPanel : Canvas
     {
         /// <summary>
+        /// Local copy of the generator.
+        /// </summary>
+        private Generator theGenerator;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="LissajousPanel"/> class.
         /// </summary>
         public LissajousPanel()
@@ -34,7 +39,8 @@ namespace Lissajous
                 if (this.TheGenerator == null)
                 {
                     return 1.0;
-                } else
+                }
+                else
                 {
                     double scaleFactorX = this.ActualWidth / this.TheGenerator.AmplitudeX;
                     double scaleFactorY = this.ActualHeight / this.TheGenerator.AmplitudeY;
@@ -43,10 +49,8 @@ namespace Lissajous
             }
         }
 
-        private Generator theGenerator;
-
         /// <summary>
-        /// Gets the generator class that manages the real time generation of the points on the curve.
+        /// Gets or sets the generator class that manages the real time generation of the points on the curve.
         /// </summary>
         public Generator TheGenerator
         {
@@ -82,7 +86,7 @@ namespace Lissajous
             }
 
             SimpleTransform transform = new SimpleTransform(semiWidth, semiHeight, scaleFactor, scaleFactor);
-            Pen thinPen = new Pen(Brushes.DarkGray, 1.0f );
+            Pen thinPen = new Pen(Brushes.DarkGray, 1.0f);
             double y = transform.DirectY(this.TheGenerator.PointNow.Y);
             Point pointEast = new Point(0, y);
             Point pointWest = new Point(this.ActualWidth, y);

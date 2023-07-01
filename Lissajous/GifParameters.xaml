@@ -1,0 +1,40 @@
+﻿<Window x:Class="Lissajous.GifParameters"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Lissajous"
+        mc:Ignorable="d"
+        SizeToContent="WidthAndHeight"
+        Title="Gif parameters" Height="Auto" Width="Auto">
+    <Grid Margin="5,5,5,10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <Label Content="Size " />
+            <local:NumberBox x:Name="XSize" Width="40" MinValue="100" MaxValue="1000" Value="400" VerticalAlignment="Center"/>
+            <Label Content="px   x   "/>
+            <local:NumberBox x:Name="YSize" Width="40" MinValue="100" MaxValue="1000" Value="400" VerticalAlignment="Center"/>
+            <Label Content=" px  Time "/>
+            <local:NumberBox x:Name="Duration" Width="40" MinValue="1" MaxValue="20" Value="4" VerticalAlignment="Center"/>
+            <Label Content=" sec"/>
+        </StackPanel>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="Filename : "  Grid.Column="0"/>
+            <TextBox x:Name="PathOfFile" Grid.Column="1"/>
+            <Button x:Name="PathExplorer" Content=" ... " Click="PathExplorer_Click" Grid.Column="2"  />
+        </Grid>
+        <StackPanel Grid.Row="2" HorizontalAlignment="Right" Orientation="Horizontal" Margin="5,5,5,5" >
+            <local:DisableableButton x:Name="OK" Content="OK" Margin="5,0,5,0" Padding="5,5,5,5" Click="OK_Click"/>
+            <Button x:Name="Cancel" Content="Cancel" Padding="5,5,5,5" Click="Cancel_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

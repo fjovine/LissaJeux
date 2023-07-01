@@ -63,15 +63,20 @@
     </Compile>
     <Compile Include="CirclePanel.cs" />
     <Compile Include="DisableableButton.cs" />
-    <Compile Include="GitAnimator.cs" />
+    <Compile Include="GifParameters.xaml.cs">
+      <DependentUpon>GifParameters.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GifAnimator.cs" />
     <Compile Include="HorizontalTailPanel.cs" />
     <Compile Include="IFallible.cs" />
+    <Compile Include="IProgressManager.cs" />
     <Compile Include="LissaSetCircle.xaml.cs">
       <DependentUpon>LissaSetCircle.xaml</DependentUpon>
     </Compile>
     <Compile Include="LissajousHelperPanel.cs" />
     <Compile Include="LissaSet.xaml.cs">
       <DependentUpon>LissaSet.xaml</DependentUpon>
+      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="LZWEncoder.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
@@ -84,6 +89,10 @@
     <Compile Include="SinusPanel.cs" />
     <Compile Include="VerticalHeadPanel.cs" />
     <Compile Include="VerticalTailPanel.cs" />
+    <Page Include="GifParameters.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LissaSetCircle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -100,7 +109,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Generator.cs" />
+    <Compile Include="Generator.cs">
+      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="HorizontalHeadPanel.cs" />
     <Compile Include="LissajousPanel.cs" />
     <Compile Include="LissaPoint.cs" />

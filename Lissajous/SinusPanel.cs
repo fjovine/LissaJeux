@@ -18,7 +18,6 @@ namespace Lissajous
     /// </summary>
     public class SinusPanel : LissajousHelperPanel
     {
-
         /// <summary>
         /// Renders the horizontally moving composing sinusoid.
         /// </summary>
@@ -40,8 +39,7 @@ namespace Lissajous
             Pen thinPen = new Pen(Brushes.DarkGray, 1.0);
             thinPen.StartLineCap = PenLineCap.Round;
             thinPen.EndLineCap = PenLineCap.Round;
-            this.Render(transform, thinPen, dc, toRender, (point, startTime) => new Point(point.T - startTime, point.Y));
-           
+            this.Render(transform, thinPen, dc, toRender, (point, startTime) => new Point(point.T - startTime, point.Y));           
         }
 
         /// <summary>
@@ -51,7 +49,6 @@ namespace Lissajous
         /// <param name="toRender">Enumeration of points to render.</param>
         protected void RenderVertical(DrawingContext dc, IEnumerable<LissaPoint> toRender)
         {
-            //this.ClipToBounds = true;
             if (this.Lissajous == null)
             {
                 return;
@@ -67,6 +64,7 @@ namespace Lissajous
         /// <summary>
         /// Renders the needed sinusoid.
         /// </summary>
+        /// <param name="transform">Simple transformation class.</param>
         /// <param name="thinPen">Pen to be used.</param>
         /// <param name="dc">Graphics environment where to render.</param>
         /// <param name="toRender">Enumeration of points on the curve to render.</param>
@@ -82,6 +80,7 @@ namespace Lissajous
                 {
                     startTime = point.T;
                 }
+
                 Point currentPoint = transform.Direct(getPoint(point, startTime));
                 if (!isFirst)
                 {

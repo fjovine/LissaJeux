@@ -237,6 +237,57 @@ namespace Lissajous
         }
 
         /// <summary>
+        /// Performs one step of the simulation, i.e. increments the current time and re-computes the point of the <c>Lissajous</c> curve.
+        /// </summary>
+        public void PerformOneStep()
+        {
+            this.CurrentTime += this.DeltaT;
+            this.AddPointNow();
+            if (this.NewPoint != null)
+            {
+                this.NewPoint(this, new NewPointEventArgs(this.PointNow));
+            }
+        }
+
+        /// <summary>
+        /// Computes the phase of the sinusoid signal that drives the X coordinate of the <c>Lissajouns</c> curve.
+        /// </summary>
+        /// <param name="time">Time in seconds since the beginning of the simulation.</param>
+        /// <returns>The X-phase computed at the passed time.</returns>
+        public double PhaseX(double time)
+        {
+            return (this.OmegaX * time) + this.Phi;
+        }
+
+        /// <summary>
+        /// Computes the phase of the sinusoid signal that drives the X coordinate of the <c>Lissajouns</c> curve.
+        /// </summary>
+        /// <returns>The X-phase at the current time.</returns>
+        public double PhaseX()
+        {
+            return this.PhaseX(this.CurrentTime);
+        }
+
+        /// <summary>
+        /// Computes the phase of the sinusoid signal that drives the Y coordinate of the <c>Lissajouns</c> curve.
+        /// </summary>
+        /// <param name="time">Time in seconds since the beginning of the simulation.</param>
+        /// <returns>The Y-phase computed at the passed time.</returns>
+        public double PhaseY(double time)
+        {
+            return this.OmegaY * time;
+        }
+
+        /// <summary>
+        /// Computes the phase of the sinusoid signal that drives the Y coordinate of the <c>Lissajouns</c> curve.
+        /// </summary>
+        /// <returns>The Y-phase at the current time.</returns>
+        public double PhaseY()
+        {
+            return this.PhaseY(this.CurrentTime);
+        }
+
+        /// <summary>
         /// Starts the generation thread.
         /// </summary>
         public void Start()
@@ -255,16 +306,6 @@ namespace Lissajous
                 });
 
             this.runner.Start();
-        }
-
-        public void PerformOneStep()
-        {
-            this.CurrentTime += DeltaT;
-            this.AddPointNow();
-            if (this.NewPoint != null)
-            {
-                NewPoint(this, new NewPointEventArgs(this.PointNow));
-            }
         }
 
         /// <summary>
@@ -294,26 +335,6 @@ namespace Lissajous
             double x = this.AmplitudeX * Math.Sin(this.PhaseX(time));
             double y = this.AmplitudeY * Math.Sin(this.PhaseY(time));
             return new LissaPoint(x, y, time);
-        }
-
-        public double PhaseX(double time)
-        {
-            return this.OmegaX * time + this.Phi;
-        }
-
-        public double PhaseX()
-        {
-            return this.PhaseX(this.CurrentTime);
-        }
-
-        public double PhaseY(double time)
-        {
-            return this.OmegaY * time;
-        }
-
-        public double PhaseY()
-        {
-            return this.PhaseY(this.CurrentTime);
         }
 
         /// <summary>
